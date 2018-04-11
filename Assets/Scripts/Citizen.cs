@@ -21,33 +21,33 @@ namespace NPC                                                                   
             }
         }
 
-        public enum CitizenName                                                         //Enumerador que contiene la lista de nombres que se asignan al azar.
-        {
-            Adolfo,
-            Ramiro,
-            Bob,
-            Jimmy,
-            Josefo,
-            Leopoldo,
-            Cirilo,
-            Fabio,
-            Yisus,
-            Jasinto,
-            Arnulfa,
-            Berta,
-            Gregoria,
-            Gertrudis,
-            Lola,
-            Marta,
-            Eva,
-            Beatriz,
-            Facunda,
-            Pepa
-        }
-        public struct CitizenInformation                                                    //Estructura que contiene la informacion del ciudadano.
-        {
-            public int age;
-            public CitizenName name;
-        }
     }
+}
+public enum CitizenName                                                                 //Enumerador que contiene la lista de nombres que se asignan al azar.
+{
+    Adolfo,
+    Ramiro,
+    Bob,
+    Jimmy,
+    Josefo,
+    Leopoldo,
+    Cirilo,
+    Fabio,
+    Yisus,
+    Jasinto,
+    Arnulfa,
+    Berta,
+    Gregoria,
+    Gertrudis,
+    Lola,
+    Marta,
+    Eva,
+    Beatriz,
+    Facunda,
+    Pepa
+}
+public struct CitizenInformation                                                            //Estructura que contiene la informacion del ciudadano.
+{
+    public int age;
+    public CitizenName name;
 }

@@ -86,28 +86,28 @@ namespace NPC                                                                   
             }
         }
 
-        public enum ZombieBehaviour                                                             //Enumerador que contiene los comportamientos del zombie.
-        {
-            idle,
-            moving,
-            rotating
-        }
-
-        public enum Taste                                                                       //Enumerador que contiene los gustos del zombie.
-        {
-            cerebro,
-            brazos,
-            piernas,
-            pechos,
-            tripas
-        }
-
-        public struct ZombieInformation                                                         //Estructura que contiene la información del zombie.
-        {
-            public Color[] color;
-            public Taste taste;
-            public ZombieBehaviour zb;
-            public float rotatingSpeed;
-        }
     }
+}
+public enum ZombieBehaviour                                                                     //Enumerador que contiene los comportamientos del zombie.
+{
+    idle,
+    moving,
+    rotating
+}
+
+public enum Taste                                                                               //Enumerador que contiene los gustos del zombie.
+{
+    cerebro,
+    brazos,
+    piernas,
+    pechos,
+    tripas
+}
+
+public struct ZombieInformation                                                                 //Estructura que contiene la información del zombie.
+{
+    public Color[] color;
+    public Taste taste;
+    public ZombieBehaviour zb;
+    public float rotatingSpeed;
 }
