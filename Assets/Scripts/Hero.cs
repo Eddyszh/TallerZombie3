@@ -23,12 +23,14 @@ public class Hero : MonoBehaviour
         if (collision.gameObject.GetComponent<Citizen>())
         {
             citizenInfo = collision.gameObject.GetComponent<Citizen>().CitizenInfo();            //Asigna la información del ciudadano para usar en el mensaje.
-            Debug.Log("Hola soy " + citizenInfo.name + " y tengo " + citizenInfo.age);           //Mensaje que da el ciudadano al entrar en contacto.
+            //GameManager.citizenTextMsg.text = "Hola soy " + citizenInfo.name + " y tengo " + citizenInfo.age;
+            //Debug.Log("Hola soy " + citizenInfo.name + " y tengo " + citizenInfo.age);           //Mensaje que da el ciudadano al entrar en contacto.
         }
 
         if (collision.gameObject.GetComponent<Zombie>())
         {
             zombieInfo = collision.gameObject.GetComponent<Zombie>().ZombieInfo();               //Asigna la información del zombie para usar en el mensaje.
+            GameManager.zombieTextMsg.text = "Waaaarrrr quiero comer " + zombieInfo.taste;
             Debug.Log("Waaaarrrr quiero comer " + zombieInfo.taste);                             //Mensaje que da el zombie al entrar en contacto.
         }
     }

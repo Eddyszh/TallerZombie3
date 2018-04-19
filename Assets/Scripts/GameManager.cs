@@ -9,14 +9,14 @@ public class GameManager : MonoBehaviour
 {
     ZombieInformation zombieInfo;                                                           //Declaración de la estructura del zombie.
     CitizenInformation citizenInfo;                                                         //Declaración de la estructura del ciudadano.
-    List<GameObject> npc = new List<GameObject>();                                          //Lista donde se agrega los npc existentes en la escena.
+    public static List<GameObject> npc = new List<GameObject>();                                          //Lista donde se agrega los npc existentes en la escena.
     public Text citizenText;                                                                //Texto que indica la cantidad de ciudadanos en la escena.
     public Text zombieText;                                                                 //Texto que indica la cantidad de zombies en la escena.
-<<<<<<< HEAD
+    public  Text citizenTextMsg;
+    static public Text zombieTextMsg;
     public GameObject citizenMsg;
     public GameObject zombibeMsg;
-=======
->>>>>>> d981f2bd0bd3a7f182a2bca4aaf4c16ff1d77771
+
     public const int MAX = 25;                                                              //Variable constante que tiene la cantidad máxima de cubos a crear.
     int citizenCount = 0;                                                                   //Contador para ciudadanos.
     int zombieCount = 0;                                                                    //Contador para zombies.
