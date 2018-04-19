@@ -13,17 +13,27 @@ namespace NPC                                                                   
             {
                 citizenInfo.age = Random.Range(15, 100);                                //Asigna la edad de manera aleatoria.
                 citizenInfo.name = (CitizenName)Random.Range(0, 20);                    //Asigna el nombre de manera aleatoria.
+                citizenInfo.speed = 6f / citizenInfo.age;                               //Asigna velocidad al ciudadano dependiendo la edad.
 	        }
 	
 	       public CitizenInformation CitizenInfo()                                      //Función que devuelve la estructura del ciudadano.
-            {
+           {
                 return citizenInfo;
+<<<<<<< HEAD
+           }            
+        }        
+    }
+}
+
+public enum CitizenName                                                         //Enumerador que contiene la lista de nombres que se asignan al azar.
+=======
             }
         }
 
     }
 }
 public enum CitizenName                                                                 //Enumerador que contiene la lista de nombres que se asignan al azar.
+>>>>>>> d981f2bd0bd3a7f182a2bca4aaf4c16ff1d77771
 {
     Adolfo,
     Ramiro,
@@ -46,8 +56,21 @@ public enum CitizenName                                                         
     Facunda,
     Pepa
 }
+<<<<<<< HEAD
+public struct CitizenInformation                                                    //Estructura que contiene la informacion del ciudadano.
+{
+    public int age;
+    public CitizenName name;
+    public float speed;
+    static public explicit operator ZombieInformation(CitizenInformation c)
+    {
+        return new ZombieInformation();
+    }
+}
+=======
 public struct CitizenInformation                                                            //Estructura que contiene la informacion del ciudadano.
 {
     public int age;
     public CitizenName name;
 }
+>>>>>>> d981f2bd0bd3a7f182a2bca4aaf4c16ff1d77771

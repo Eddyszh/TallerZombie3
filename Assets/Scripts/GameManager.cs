@@ -12,17 +12,24 @@ public class GameManager : MonoBehaviour
     List<GameObject> npc = new List<GameObject>();                                          //Lista donde se agrega los npc existentes en la escena.
     public Text citizenText;                                                                //Texto que indica la cantidad de ciudadanos en la escena.
     public Text zombieText;                                                                 //Texto que indica la cantidad de zombies en la escena.
+<<<<<<< HEAD
+    public GameObject citizenMsg;
+    public GameObject zombibeMsg;
+=======
+>>>>>>> d981f2bd0bd3a7f182a2bca4aaf4c16ff1d77771
     public const int MAX = 25;                                                              //Variable constante que tiene la cantidad máxima de cubos a crear.
     int citizenCount = 0;                                                                   //Contador para ciudadanos.
     int zombieCount = 0;                                                                    //Contador para zombies.
 	void Start ()
-    {        
+    {
+        zombibeMsg.SetActive(false);
+        citizenMsg.SetActive(false);
         int spawn = -1;                                                                     //Inicia el default del switch para asignar el heroe.
         zombieInfo.color = new Color[] { Color.cyan, Color.green, Color.magenta };          //Array de color para asignar de manera aleatoria a cada zombie.
         for (int i = 0; i < Random.Range(new MinValue().minValue, MAX); i++)                //Bucle que crea una cantidad aleatoria de primitivas con posición aleatoria.                                                 
         {
             GameObject humanoid = GameObject.CreatePrimitive(PrimitiveType.Cube);           
-            Vector3 pos = new Vector3(Random.Range(-10, 10), 0, Random.Range(-10, 10));     
+            Vector3 pos = new Vector3(Random.Range(-50, 50), 0, Random.Range(-50, 50));     
             humanoid.transform.position = pos;
             switch (spawn)                                                                  //Asigna "personalidades" de manera aleatoria.
             {

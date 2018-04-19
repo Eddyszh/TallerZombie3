@@ -13,6 +13,8 @@ namespace NPC                                                                   
 	        void Start ()
             {
                 zombieInfo.taste = (Taste)Random.Range(0, 5);                                   //Asigna el gusto del zombie al azar.
+                zombieInfo.zombieAge = Random.Range(15, 100);                                   //Asigna edad aleatoria al zombie.
+                zombieInfo.movementSpeed = 6f / zombieInfo.zombieAge;                           //Asigna la velocidad al zombie dependiendo de la edad.
                 StartCoroutine(Behaviour());                                                    //Inicia la corrutina del comportamiento del zombie.
                 gameObject.AddComponent<Rigidbody>();                                           //Añade cuerpo rigido al zombie.
 	        }	
@@ -84,6 +86,26 @@ namespace NPC                                                                   
             {
                 return zombieInfo;
             }
+<<<<<<< HEAD
+        }        
+    }
+}
+
+public enum ZombieBehaviour                                                             //Enumerador que contiene los comportamientos del zombie.
+{
+    idle,
+    moving,
+    rotating
+}
+
+public enum Taste                                                                       //Enumerador que contiene los gustos del zombie.
+{
+    cerebro,
+    brazos,
+    piernas,
+    pechos,
+    tripas
+=======
         }
 
     }
@@ -110,4 +132,15 @@ public struct ZombieInformation                                                 
     public Taste taste;
     public ZombieBehaviour zb;
     public float rotatingSpeed;
+>>>>>>> d981f2bd0bd3a7f182a2bca4aaf4c16ff1d77771
+}
+
+public struct ZombieInformation                                                         //Estructura que contiene la información del zombie.
+{
+    public Color[] color;
+    public Taste taste;
+    public ZombieBehaviour zb;
+    public float rotatingSpeed;
+    public float zombieAge;
+    public float movementSpeed;
 }
