@@ -21,7 +21,25 @@ namespace NPC                                                                   
             {
                 return zombieInfo;
             }
-        }        
+
+            override public void Reaction()
+            {
+                //base.Reaction();
+                foreach (GameObject go in GameManager.npc)
+                {
+                    if(go.GetComponent<Hero>())
+                    {
+                        float dist = Vector3.Distance(go.transform.position, transform.position);
+                        Debug.Log(dist);
+                        Debug.Log(go);
+                        if (dist <= 5f)
+                        {
+                            transform.position = Vector3.MoveTowards(transform.position, go.transform.position, humanoidInfo.movementSpeed);
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 

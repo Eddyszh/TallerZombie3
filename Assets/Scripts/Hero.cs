@@ -8,6 +8,12 @@ public class Hero : MonoBehaviour
 {
     CitizenInformation citizenInfo;                                                               //Declaración de la estructura del ciudadano.
     ZombieInformation zombieInfo;                                                                 //Declaración de la estructura del zombie.
+    HumanoidInformation humanoidInfo;
+    public GameManager gm;
+    float msgTime = 2f;
+    bool touching = false;
+    float dist;
+    
     void Start ()                                                                                 //Agrega los scripts de movimiento al heroe, asigna la cámara como hijo y la ubica en la posición del heroe.
     {
         gameObject.AddComponent<FPSAim>();
@@ -16,23 +22,48 @@ public class Hero : MonoBehaviour
         Camera.main.gameObject.transform.localPosition = gameObject.transform.position;
         Camera.main.transform.SetParent(gameObject.transform);
         Camera.main.gameObject.AddComponent<FPSAim>();
+        gm = FindObjectOfType<GameManager>().GetComponent<GameManager>();
     }
 
     public void OnCollisionEnter(Collision collision)                                            //Método OnCollisionEnter, compara con el cubo que colisione si es ciudadano o zombie y muestre el mesaje correspondiente.
     {
         if (collision.gameObject.GetComponent<Citizen>())
         {
+            msgTime = 2f;
+            touching = true;
             citizenInfo = collision.gameObject.GetComponent<Citizen>().CitizenInfo();            //Asigna la información del ciudadano para usar en el mensaje.
-            //GameManager.citizenTextMsg.text = "Hola soy " + citizenInfo.name + " y tengo " + citizenInfo.age;
-            //Debug.Log("Hola soy " + citizenInfo.name + " y tengo " + citizenInfo.age);           //Mensaje que da el ciudadano al entrar en contacto.
+            humanoidInfo = collision.gameObject.GetComponent<Npc>().HumanoidInfo();
+            gm.citizenMsg.SetActive(true);
+            gm.citizenTextMsg.text = "Hola soy " + citizenInfo.name + " y tengo " + humanoidInfo.age;   //Mensaje que da el ciudadano al entrar en contacto.
         }
-
-        if (collision.gameObject.GetComponent<Zombie>())
+    }
+    void Update()
+    {
+        if (touching == true)
+            msgTime -= Time.deltaTime;
+        if (msgTime < 0)
         {
-            zombieInfo = collision.gameObject.GetComponent<Zombie>().ZombieInfo();               //Asigna la información del zombie para usar en el mensaje.
-            GameManager.zombieTextMsg.text = "Waaaarrrr quiero comer " + zombieInfo.taste;
-            Debug.Log("Waaaarrrr quiero comer " + zombieInfo.taste);                             //Mensaje que da el zombie al entrar en contacto.
+            gm.citizenMsg.SetActive(false);
+            gm.zombibeMsg.SetActive(false);
         }
+        
+
+        foreach (GameObject go in GameManager.npc)
+        {
+            if (go.GetComponent<Zombie>())
+            {
+                dist = Vector3.Distance(go.transform.position, transform.position);
+                if (dist <= 5f)
+                {
+                    msgTime = 2f;
+                    touching = true;
+                    zombieInfo = go.GetComponent<Zombie>().ZombieInfo();                            //Asigna la información del zombie para usar en el mensaje.
+                    gm.zombibeMsg.SetActive(true);
+                    gm.zombieTextMsg.text = "Waaaarrrr quiero comer " + zombieInfo.taste;           //Mensaje que da el zombie al entrar en el rango asignado.
+                }
+            }
+        }
+        
     }
 }
 public class MovSpeed                                                                            //Constructor para asignar la velocidad de moviento del heroe al azar por medio de una variable flotante de solo lectura.

@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     public Text citizenText;                                                                //Texto que indica la cantidad de ciudadanos en la escena.
     public Text zombieText;                                                                 //Texto que indica la cantidad de zombies en la escena.
     public  Text citizenTextMsg;
-    static public Text zombieTextMsg;
+    public Text zombieTextMsg;
     public GameObject citizenMsg;
     public GameObject zombibeMsg;
 
@@ -50,7 +50,7 @@ public class GameManager : MonoBehaviour
                     break;
             }
             spawn = Random.Range(1, 3);                                                     //Selecion aleatoria de "personalidad".
-            if(humanoid.gameObject.tag != "Player")                                         //Condición para agregar npc a la lista.
+            if(humanoid.gameObject != null)                                                 //Condición para agregar npc a la lista.
                 npc.Add(humanoid);                                                          //Agrega npc a la lista. 
         }
         foreach (GameObject go in npc)                                                      //Por cada elemento en la lista, aumenta el contador de ciudadano o zombie.
@@ -64,7 +64,7 @@ public class GameManager : MonoBehaviour
             {
                 zombieCount++;
                 zombieText.text = "Zombie: " + zombieCount.ToString();
-            }            
+            }   
         }
     }	
 }
