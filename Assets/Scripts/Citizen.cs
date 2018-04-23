@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using NPC.Enemy;
 
 namespace NPC                                                                           //namespace NPC, contiene los namespace ally y enemy.
 {
@@ -20,6 +21,24 @@ namespace NPC                                                                   
                 return citizenInfo;
 
            }
+
+            public override void Reaction()
+            {
+                base.Reaction();
+                foreach (GameObject go in GameManager.npc)
+                {
+                    if(go.GetComponent<Zombie>())
+                    {
+                        float dist = Vector3.Distance(go.transform.position, transform.position);
+                        if (dist <= 5f)
+                        {
+                            //transform.position -= transform.position * humanoidInfo.movementSpeed;
+                            transform.position = Vector3.MoveTowards(transform.position, go.transform.position, -humanoidInfo.movementSpeed);
+                        }
+                    }
+                    
+                }
+            }
         }
     }
 }

@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     public Text zombieTextMsg;
     public GameObject citizenMsg;
     public GameObject zombibeMsg;
+    public Image heroDied;
 
     public const int MAX = 25;                                                              //Variable constante que tiene la cantidad máxima de cubos a crear.
     int citizenCount = 0;                                                                   //Contador para ciudadanos.
@@ -24,6 +25,7 @@ public class GameManager : MonoBehaviour
     {
         zombibeMsg.SetActive(false);
         citizenMsg.SetActive(false);
+        heroDied.gameObject.SetActive(false);
         int spawn = -1;                                                                     //Inicia el default del switch para asignar el heroe.
         zombieInfo.color = new Color[] { Color.cyan, Color.green, Color.magenta };          //Array de color para asignar de manera aleatoria a cada zombie.
         for (int i = 0; i < Random.Range(new MinValue().minValue, MAX); i++)                //Bucle que crea una cantidad aleatoria de primitivas con posición aleatoria.                                                 

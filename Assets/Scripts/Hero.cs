@@ -33,8 +33,16 @@ public class Hero : MonoBehaviour
             touching = true;
             citizenInfo = collision.gameObject.GetComponent<Citizen>().CitizenInfo();            //Asigna la información del ciudadano para usar en el mensaje.
             humanoidInfo = collision.gameObject.GetComponent<Npc>().HumanoidInfo();
-            gm.citizenMsg.SetActive(true);
-            gm.citizenTextMsg.text = "Hola soy " + citizenInfo.name + " y tengo " + humanoidInfo.age;   //Mensaje que da el ciudadano al entrar en contacto.
+            gm.citizenMsg.SetActive(true);  
+            gm.citizenMsg.transform.localPosition = collision.gameObject.GetComponent<Citizen>().transform.up * 4;
+            gm.citizenMsg.transform.SetParent(collision.gameObject.GetComponent<Citizen>().transform);
+            gm.citizenTextMsg.text = "Hola soy " + citizenInfo.name + " y tengo " + humanoidInfo.age + " años";   //Mensaje que da el ciudadano al entrar en contacto.
+        }
+        if (collision.gameObject.GetComponent<Zombie>())
+        {
+            gm.heroDied.gameObject.SetActive(true);
+            gm.citizenMsg.SetActive(false);
+            gm.zombibeMsg.SetActive(false);
         }
     }
     void Update()
@@ -46,7 +54,6 @@ public class Hero : MonoBehaviour
             gm.citizenMsg.SetActive(false);
             gm.zombibeMsg.SetActive(false);
         }
-        
 
         foreach (GameObject go in GameManager.npc)
         {

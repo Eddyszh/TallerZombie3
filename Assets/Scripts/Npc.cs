@@ -15,7 +15,7 @@ public class Npc : MonoBehaviour
     public GameObject closestGameObject;
     public GameObject furthestGameObject;
     public int move;
-    bool activeReaction = true;
+    bool activeReaction = false;
     void Awake ()
     {
         closestDistance = Mathf.Infinity;
@@ -147,7 +147,7 @@ public class Npc : MonoBehaviour
             }
         }
     }*/
-    virtual public void Reaction()
+    public virtual void Reaction()
     {
         foreach (GameObject go in GameManager.npc)
         {
