@@ -10,10 +10,11 @@ public class Hero : MonoBehaviour
     ZombieInformation zombieInfo;                                                                 //Declaración de la estructura del zombie.
     HumanoidInformation humanoidInfo;
     public GameManager gm;
+    Npc npc;
     float msgTime = 2f;
     bool touching = false;
     float dist;
-    
+
     void Start ()                                                                                 //Agrega los scripts de movimiento al heroe, asigna la cámara como hijo y la ubica en la posición del heroe.
     {
         gameObject.AddComponent<FPSAim>();
@@ -23,6 +24,7 @@ public class Hero : MonoBehaviour
         Camera.main.transform.SetParent(gameObject.transform);
         Camera.main.gameObject.AddComponent<FPSAim>();
         gm = FindObjectOfType<GameManager>().GetComponent<GameManager>();
+        npc = FindObjectOfType<Npc>().GetComponent<Npc>();
     }
 
     public void OnCollisionEnter(Collision collision)                                            //Método OnCollisionEnter, compara con el cubo que colisione si es ciudadano o zombie y muestre el mesaje correspondiente.
@@ -33,26 +35,32 @@ public class Hero : MonoBehaviour
             touching = true;
             citizenInfo = collision.gameObject.GetComponent<Citizen>().CitizenInfo();            //Asigna la información del ciudadano para usar en el mensaje.
             humanoidInfo = collision.gameObject.GetComponent<Npc>().HumanoidInfo();
-            gm.citizenMsg.SetActive(true);  
-            gm.citizenMsg.transform.localPosition = collision.gameObject.GetComponent<Citizen>().transform.up * 4;
             gm.citizenMsg.transform.SetParent(collision.gameObject.GetComponent<Citizen>().transform);
+            gm.citizenMsg.transform.localPosition = collision.gameObject.GetComponent<Citizen>().transform.up;
+            gm.citizenMsg.SetActive(true);
             gm.citizenTextMsg.text = "Hola soy " + citizenInfo.name + " y tengo " + humanoidInfo.age + " años";   //Mensaje que da el ciudadano al entrar en contacto.
         }
         if (collision.gameObject.GetComponent<Zombie>())
         {
             gm.heroDied.gameObject.SetActive(true);
             gm.citizenMsg.SetActive(false);
-            gm.zombibeMsg.SetActive(false);
+            gm.zombieMsg.SetActive(false);
+            gameObject.GetComponent<FPSAim>().enabled = false;
+            gameObject.GetComponent<FPSMove>().enabled = false;
+            Camera.main.gameObject.GetComponent<FPSAim>().enabled = false;
+            gameObject.GetComponent<Hero>().enabled = false;
         }
     }
-    void Update()
+    void Update()                                                                                       //Contiene toda la parte de UI, se activa dependiendo la situación.
     {
+        gm.citizenMsg.GetComponent<Transform>().LookAt(transform);
+        gm.zombieMsg.GetComponent<Transform>().LookAt(transform);
         if (touching == true)
             msgTime -= Time.deltaTime;
         if (msgTime < 0)
         {
             gm.citizenMsg.SetActive(false);
-            gm.zombibeMsg.SetActive(false);
+            gm.zombieMsg.SetActive(false);
         }
 
         foreach (GameObject go in GameManager.npc)
@@ -64,16 +72,17 @@ public class Hero : MonoBehaviour
                 {
                     msgTime = 2f;
                     touching = true;
-                    zombieInfo = go.GetComponent<Zombie>().ZombieInfo();                            //Asigna la información del zombie para usar en el mensaje.
-                    gm.zombibeMsg.SetActive(true);
-                    gm.zombieTextMsg.text = "Waaaarrrr quiero comer " + zombieInfo.taste;           //Mensaje que da el zombie al entrar en el rango asignado.
+                    gm.zombieMsg.transform.SetParent(go.gameObject.GetComponent<Zombie>().transform);
+                    gm.zombieMsg.transform.localPosition = go.GetComponent<Zombie>().transform.up;
+                    zombieInfo = go.GetComponent<Zombie>().ZombieInfo();                                //Asigna la información del zombie para usar en el mensaje.
+                    gm.zombieMsg.SetActive(true);
+                    gm.zombieTextMsg.text = "Waaaarrrr quiero comer " + zombieInfo.taste;               //Mensaje que da el zombie al entrar en el rango asignado.
                 }
             }
         }
-        
     }
 }
-public class MovSpeed                                                                            //Constructor para asignar la velocidad de moviento del heroe al azar por medio de una variable flotante de solo lectura.
+public class MovSpeed                                                                                   //Constructor para asignar la velocidad de moviento del heroe al azar por medio de una variable flotante de solo lectura.
 {
     public readonly float movSpeed;
     public MovSpeed()

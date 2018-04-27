@@ -7,15 +7,16 @@ namespace NPC                                                                   
 {
     namespace Enemy                                                                             //namespace Enemy, pertenece al namespace NPC y contiene la clase del zombie.
     {
-        public class Zombie : Npc
+        public class Zombie : Npc 
         {
             ZombieInformation zombieInfo;                                                       //Declaración de la estructura del zombie.
-            CitizenInformation citizenInfo;
+            GameManager gm;
 	        void Start ()
             {
                 zombieInfo.taste = (Taste)Random.Range(0, 5);                                   //Asigna el gusto del zombie al azar.
-                zombieInfo.zombieAge = Random.Range(15, 100);                                   //Asigna edad aleatoria al zombie.
-                gameObject.AddComponent<Rigidbody>();                                           //Añade cuerpo rigido al zombie.
+                zombieInfo.color = new Color[] { Color.cyan, Color.green, Color.magenta };      //Array de color para asignar de manera aleatoria a cada zombie.
+                gameObject.GetComponent<Renderer>().material.color = zombieInfo.color[Random.Range(0, 3)];
+                gm = FindObjectOfType<GameManager>().GetComponent<GameManager>();
 	        }
 
             public ZombieInformation ZombieInfo()                                               //Función que devuelve la estructura del zombie.
@@ -23,28 +24,18 @@ namespace NPC                                                                   
                 return zombieInfo;
             }
 
-            public override void Reaction()
+            private void OnCollisionEnter(Collision collision)                                  //Si entra en colision con el ciudadano lo convierte en zombiey modifica el contador.
             {
-                //base.Reaction();
-                foreach (GameObject go in GameManager.npc)
+                if (collision.gameObject.GetComponent<Citizen>())
                 {
-                    if(go.GetComponent<Hero>() || go.GetComponent<Citizen>())
-                    {
-                        float dist = Vector3.Distance(go.transform.position, transform.position);
-                        //Debug.Log(dist);
-                        Debug.Log(humanoidInfo.movementSpeed);
-                        if (dist <= 5f)
-                        {
-                            transform.position = Vector3.MoveTowards(transform.position, go.transform.position, humanoidInfo.movementSpeed);
-                            //transform.Translate = Vector3.forward * humanoidInfo.movementSpeed;
-                        }
-                    }
+                    Citizen c = collision.gameObject.GetComponent<Citizen>();
+                    Zombie z = c;
+                    print("Desde zombie " + z.humanoidInfo.age);
+                    gm.citizenCount--;
+                    gm.citizenText.text = "Citizen: " + gm.citizenCount.ToString();
+                    gm.zombieCount++;
+                    gm.zombieText.text = "Zombie: " + gm.zombieCount.ToString();
                 }
-            }
-            private void OnCollisionEnter(Collision collision)
-            {
-                /*if (collision.gameObject.GetComponent<Citizen>())
-                    collision.gameObject.GetComponent<Citizen>().*/
             }
         }
     }

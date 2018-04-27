@@ -13,18 +13,15 @@ namespace NPC                                                                   
 	        void Start ()
             {
                 citizenInfo.name = (CitizenName)Random.Range(0, 20);                    //Asigna el nombre de manera aleatoria.
-                gameObject.AddComponent<Rigidbody>();
 	        }
 	
 	       public CitizenInformation CitizenInfo()                                      //Función que devuelve la estructura del ciudadano.
            {
                 return citizenInfo;
-
            }
 
-            public override void Reaction()
+            public override void Reaction()                                             //Sobreescribe el método de reacción para que el ciudadano huya del zombie al entrar en el rango de distancia.
             {
-                base.Reaction();
                 foreach (GameObject go in GameManager.npc)
                 {
                     if(go.GetComponent<Zombie>())
@@ -32,12 +29,21 @@ namespace NPC                                                                   
                         float dist = Vector3.Distance(go.transform.position, transform.position);
                         if (dist <= 5f)
                         {
-                            //transform.position -= transform.position * humanoidInfo.movementSpeed;
                             transform.position = Vector3.MoveTowards(transform.position, go.transform.position, -humanoidInfo.movementSpeed);
                         }
                     }
                     
                 }
+            }
+
+            public static implicit operator Zombie(Citizen c)                           //Hace el cast de la clase ciudadano a la clase zombie, manteniendo la edad del mismo.
+            {
+                Zombie z = c.gameObject.AddComponent<Zombie>();
+                print(z.humanoidInfo.age);
+                z.humanoidInfo.age = c.humanoidInfo.age;
+                print(z.humanoidInfo.age);
+                Destroy(c);
+                return z;
             }
         }
     }

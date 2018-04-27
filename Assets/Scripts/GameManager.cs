@@ -12,22 +12,21 @@ public class GameManager : MonoBehaviour
     public static List<GameObject> npc = new List<GameObject>();                                          //Lista donde se agrega los npc existentes en la escena.
     public Text citizenText;                                                                //Texto que indica la cantidad de ciudadanos en la escena.
     public Text zombieText;                                                                 //Texto que indica la cantidad de zombies en la escena.
-    public  Text citizenTextMsg;
+    public Text citizenTextMsg;
     public Text zombieTextMsg;
     public GameObject citizenMsg;
-    public GameObject zombibeMsg;
+    public GameObject zombieMsg;
     public Image heroDied;
 
     public const int MAX = 25;                                                              //Variable constante que tiene la cantidad máxima de cubos a crear.
-    int citizenCount = 0;                                                                   //Contador para ciudadanos.
-    int zombieCount = 0;                                                                    //Contador para zombies.
+    public int citizenCount = 0;                                                                   //Contador para ciudadanos.
+    public int zombieCount = 0;                                                                    //Contador para zombies.
 	void Start ()
     {
-        zombibeMsg.SetActive(false);
+        zombieMsg.SetActive(false);
         citizenMsg.SetActive(false);
         heroDied.gameObject.SetActive(false);
         int spawn = -1;                                                                     //Inicia el default del switch para asignar el heroe.
-        zombieInfo.color = new Color[] { Color.cyan, Color.green, Color.magenta };          //Array de color para asignar de manera aleatoria a cada zombie.
         for (int i = 0; i < Random.Range(new MinValue().minValue, MAX); i++)                //Bucle que crea una cantidad aleatoria de primitivas con posición aleatoria.                                                 
         {
             GameObject humanoid = GameObject.CreatePrimitive(PrimitiveType.Cube);           
@@ -42,7 +41,6 @@ public class GameManager : MonoBehaviour
                 case 2:                                                                     //Asigna "personalidad" de zombie añadiendo clase y color.
                     humanoid.name = "Zombie";
                     humanoid.AddComponent<Zombie>();
-                    humanoid.GetComponent<Renderer>().material.color = zombieInfo.color[Random.Range(0, 3)];
                     break;
                 default:                                                                    //Asigna "personalidad" de heroe añadiendo clase y color.
                     humanoid.name = "Hero";
@@ -66,7 +64,7 @@ public class GameManager : MonoBehaviour
             {
                 zombieCount++;
                 zombieText.text = "Zombie: " + zombieCount.ToString();
-            }   
+            }
         }
     }	
 }
